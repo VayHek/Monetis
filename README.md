@@ -1,5 +1,3 @@
-Here is the formatted content of the README.md file:
-
 # Monetis
 
 Project Plan: Monetis - Expense Tracker Application
