@@ -1,0 +1,11 @@
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\bin\Debug\net8.0\Monetis.Shared.deps.json
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\bin\Debug\net8.0\Monetis.Shared.dll
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\bin\Debug\net8.0\Monetis.Shared.pdb
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\obj\Debug\net8.0\Monetis.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\obj\Debug\net8.0\Monetis.Shared.AssemblyInfoInputs.cache
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\obj\Debug\net8.0\Monetis.Shared.AssemblyInfo.cs
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\obj\Debug\net8.0\Monetis.Shared.csproj.CoreCompileInputs.cache
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\obj\Debug\net8.0\Monetis.Shared.dll
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\obj\Debug\net8.0\refint\Monetis.Shared.dll
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\obj\Debug\net8.0\Monetis.Shared.pdb
+C:\Users\Dell\source\repos\Monetis\Monetis.Shared\obj\Debug\net8.0\ref\Monetis.Shared.dll

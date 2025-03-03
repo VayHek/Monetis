@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "oPK9rWEuVSneVJ/TAoPXKxNcpnF/gQLlD27USIpsAk0=",
+  "Source": "Monetis.Server",
+  "BasePath": "_content/Monetis.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
