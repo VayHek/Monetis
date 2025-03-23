@@ -1,0 +1,6 @@
+@MonetisV2.Server_HostAddress = http://localhost:5009
+
+GET {{MonetisV2.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

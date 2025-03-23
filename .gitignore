@@ -1,0 +1,11 @@
+bin/
+obj/
+.vs/
+*.db
+*.user
+*.suo
+*.log
+.env
+__pycache__/
+*.DS_Store
+node_modules/

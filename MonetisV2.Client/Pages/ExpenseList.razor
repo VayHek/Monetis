@@ -1,0 +1,66 @@
+﻿@page "/"
+@using MonetisV2.Shared
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<h3>Expenses</h3>
+<button @onclick="NavigateToExpenseForm">Add New Expense</button>
+
+@if (expenses == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var expense in expenses)
+            {
+                <tr>
+                    <td>@expense.Description</td>
+                    <td>@expense.Amount</td>
+                    <td>@expense.Category</td>
+                    <td>@expense.Date.ToShortDateString()</td>
+                    <td>
+                        <button @onclick="() => EditExpense(expense.Id)">Edit</button>
+                        <button @onclick="() => DeleteExpense(expense.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Expense> expenses = new List<Expense>(); // Initialize to avoid CS8618 warning
+
+    protected override async Task OnInitializedAsync()
+    {
+        expenses = await Http.GetFromJsonAsync<List<Expense>>("api/expenses") ?? new List<Expense>();
+    }
+
+    private void NavigateToExpenseForm()
+    {
+        Navigation.NavigateTo("/expense-form");
+    }
+
+    private void EditExpense(int id)
+    {
+        Navigation.NavigateTo($"/expense-form/{id}");
+    }
+
+    private async Task DeleteExpense(int id)
+    {
+        await Http.DeleteAsync($"api/expenses/{id}");
+        expenses = await Http.GetFromJsonAsync<List<Expense>>("api/expenses") ?? new List<Expense>();
+    }
+}
