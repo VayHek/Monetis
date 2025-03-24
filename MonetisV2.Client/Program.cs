@@ -9,7 +9,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 // Update the BaseAddress to match the backend URL
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri("http://localhost:6001") 
+    BaseAddress = new Uri("https://localhost:6002") 
 });
 
 await builder.Build().RunAsync();

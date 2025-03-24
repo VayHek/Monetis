@@ -20,12 +20,11 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:5000", "https://localhost:5000")
+        policy.WithOrigins("https://localhost:6004") // Client port
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
-
 // Add response compression
 builder.Services.AddResponseCompression(opts =>
 {

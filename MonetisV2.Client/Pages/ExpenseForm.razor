@@ -7,6 +7,12 @@
 
 <h3>@(IsEdit ? "Edit Expense" : "Add New Expense")</h3>
 
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-info">@Message</div>
+}
+
+
 <EditForm Model="@expense" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -37,30 +43,56 @@
 @code {
     [Parameter]
     public int? Id { get; set; }
-
     private Expense expense = new();
-
     private bool IsEdit => Id.HasValue;
+    private string? Message;
+    private bool IsSaving = false;
 
     protected override async Task OnInitializedAsync()
     {
         if (IsEdit)
         {
-            expense = await Http.GetFromJsonAsync<Expense>($"api/expenses/{Id}") ?? new Expense();
+            try
+            {
+                expense = await Http.GetFromJsonAsync<Expense>($"api/expenses/{Id}") ?? new Expense();
+            }
+            catch
+            {
+                Message = "Failed to load the expense for editing.";
+            }
         }
     }
 
     private async Task HandleValidSubmit()
     {
-        if (IsEdit)
+        IsSaving = true;
+
+        try
         {
-            await Http.PutAsJsonAsync($"api/expenses/{expense.Id}", expense);
+            if (IsEdit)
+            {
+                await Http.PutAsJsonAsync($"api/expenses/{expense.Id}", expense);
+                Message = "Expense updated successfully.";
+            }
+            else
+            {
+                await Http.PostAsJsonAsync("api/expenses", expense);
+                Message = "Expense created successfully.";
+            }
+
+            // Optional: delay for user to see the message
+            await Task.Delay(1000);
+
+            Navigation.NavigateTo("/");
         }
-        else
+        catch (Exception ex)
         {
-            await Http.PostAsJsonAsync("api/expenses", expense);
+            Message = $"Something went wrong: {ex.Message}";
         }
 
-        Navigation.NavigateTo("/");
+        finally
+        {
+            IsSaving = false;
+        }
     }
 }

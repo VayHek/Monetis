@@ -36,6 +36,7 @@ namespace MonetisV2.Server.Controllers
         {
             _context.Expenses.Add(expense);
             await _context.SaveChangesAsync();
+
             return CreatedAtAction(nameof(GetExpense), new { id = expense.Id }, expense);
         }
 
