@@ -60,5 +60,31 @@ namespace MonetisV2.Server.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        // GET: api/expenses/total
+        [HttpGet("total")]
+        public async Task<ActionResult<decimal>> GetTotalSpent()
+        {
+            return await _context.Expenses.SumAsync(e => e.Amount);
+        }
+
+        // GET: api/expenses/category/{category}
+        [HttpGet("category/{category}")]
+        public async Task<ActionResult<IEnumerable<Expense>>> GetByCategory(string category)
+        {
+            return await _context.Expenses
+                .Where(e => e.Category.ToLower() == category.ToLower())
+                .ToListAsync();
+        }
+
+        // GET: api/expenses/range?start=2025-03-01&end=2025-03-31
+        [HttpGet("range")]
+        public async Task<ActionResult<IEnumerable<Expense>>> GetInRange([FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            return await _context.Expenses
+                .Where(e => e.Date >= start && e.Date <= end)
+                .ToListAsync();
+        }
+
     }
 }
