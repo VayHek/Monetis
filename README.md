@@ -1,73 +1,63 @@
-# 💸 Monetis - Expense Tracker
+# Monetis – Expense Tracker
 
-**Monetis** is a web-based expense tracker built using **Blazor WebAssembly** and **ASP.NET Core**. It helps users log, categorize, and manage their daily expenses, offering detailed summaries and filtering capabilities — all in a clean and responsive interface.
+Monetis is a simple web-based expense tracker that lets users log, categorize, and view their daily spending. It’s built with Blazor WebAssembly and ASP.NET Core Web API, using SQLite as the database.
 
-## 🚀 Features
+---
 
-- ✅ **Expense Logging** – Add new expenses with description, amount, category, and date
-- ✅ **Edit/Delete Expenses** – Update or remove entries
-- ✅ **Expense Summary** – View total and category-wise breakdown
-- ✅ **Search & Filter** – Filter by category or date range
-- ✅ **Responsive UI** – Works on desktop and mobile
+## Features
 
-## 🛠 Technologies Used
+- Add, edit, and delete expenses
+- Filter expenses by category
+- See a chart of spending by category (Chart.js)
+- Total spent amount calculated automatically
+- Dark/light mode toggle
+- Seeded database with example data
+- Responsive UI built with Bootstrap
 
-| Layer     | Tech Stack                          |
-|-----------|-------------------------------------|
-| Frontend  | Blazor WebAssembly, Razor Components, Bootstrap |
-| Backend   | ASP.NET Core Web API (.NET 8), CORS-enabled |
-| Database  | SQLite + Entity Framework Core      |
-| Tools     | Swagger/OpenAPI, Visual Studio, Git/GitHub |
+---
 
-## 📁 Project Structure
+## Technologies Used
 
-- `MonetisV2.Client` — Blazor WebAssembly frontend
-- `MonetisV2.Server` — ASP.NET Core backend API (runs on `https://localhost:6001`)
-- `MonetisV2.Shared` — Shared models between client and server
+- Blazor WebAssembly (Frontend)
+- ASP.NET Core 8 (Backend API)
+- Entity Framework Core + SQLite
+- Chart.js (via CDN for category visualization)
+- Bootstrap for styling and layout
 
-## 🧪 How to Run Locally
+---
 
-### Prerequisites
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)
-- Visual Studio 2022 or newer
+## How to Run
 
-### Steps
+1. Clone the repo  
+2. Make sure both projects (`MonetisV2.Client` and `MonetisV2.Server`) are set as startup projects  
+3. Run the solution  
+4. Open the client in your browser (usually `https://localhost:6004`)
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/VayHek/Monetis.git
-   cd Monetis
-   ```
+> Make sure the backend is also running (usually `https://localhost:6002`)  
+> You can test the API directly using Swagger at `https://localhost:6002/swagger`
 
-2. Run the backend:
-   - Open `MonetisV2.Server` in Visual Studio
-   - Set it as the **Startup Project**
-   - Run it (F5)
-   - Should open `https://localhost:6001/swagger`
+---
 
-3. Run the frontend:
-   - Open a second instance of Visual Studio
-   - Set `MonetisV2.Client` as the Startup Project
-   - Run it (F5)
-   - App loads at `https://localhost:5000`
+## Implemented From Feature Checklist
 
-## ✅ Integrated Requirements Checklist
+- ✅ Built as a full CRUD API
+- ✅ Uses async methods throughout
+- ✅ Shared class model with Blazor and Web API
+- ✅ Added category filtering and a summary function (total spent)
+- ✅ Chart shows spending breakdown by category
+- ✅ Dark/light theme toggle
+- ✅ Clean commits and final polish
 
-- ✔️ Uses Razor Components (Blazor WebAssembly SPA)
-- ✔️ Backend API with full CRUD (`GET`, `POST`, `PUT`, `DELETE`)
-- ✔️ SQLite database with at least 1 entity (`Expense`)
-- ✔️ Entity Framework Core for DB access
-- ✔️ At least 3 functions/methods used for data handling
-- ✔️ Responsive UI with Bootstrap
-- ✔️ Hosted locally with CORS and Swagger support
+---
 
-## 📌 Notes for Reviewers
+## Notes
 
-- The client and server are run **separately** (not hosted by server)
-- Ensure CORS is enabled and both are running on their respective ports
-- All sample data is stored locally in a SQLite file (`monetis.db`)
-- The `README.md` includes complete setup instructions
+- Sample data is included via EF Core seeding
+- Chart.js is loaded via CDN — no extra setup required
+- Project is structured using top-level C# 9 syntax for clarity
 
-## 👨‍💻 Author
+---
 
-[VayHek](https://github.com/VayHek)
+## Author
+
+Built by me for a course submission. Feel free to explore and use the code for learning.
