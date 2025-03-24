@@ -1,16 +1,25 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+@code {
+    private string theme = "light";
+
+    private void ToggleTheme()
+    {
+        theme = (theme == "light") ? "dark" : "light";
+    }
+}
+
+<div class="@($"min-vh-100 bg-{theme} text-{(theme == "dark" ? "light" : "dark")}")">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+        <a class="navbar-brand fw-bold text-white" href="/">💸 Monetis</a>
+        <div class="ms-auto">
+            <button class="btn btn-outline-light" @onclick="ToggleTheme">
+                Toggle @theme mode
+            </button>
         </div>
+    </nav>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    <div class="container py-4">
+        @Body
+    </div>
 </div>

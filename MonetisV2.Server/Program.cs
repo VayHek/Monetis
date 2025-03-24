@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using MonetisV2.Server.Models;
 using Microsoft.AspNetCore.ResponseCompression;
+using MonetisV2.Server.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,8 +29,8 @@ builder.Services.AddCors(options =>
 // Add response compression
 builder.Services.AddResponseCompression(opts =>
 {
-    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-        new[] { "application/octet-stream" });
+    string[] extraMimeTypes = new[] { "application/octet-stream" };
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(MimeTypes.Extra);
 });
 
 var app = builder.Build();

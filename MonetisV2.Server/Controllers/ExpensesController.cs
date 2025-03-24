@@ -73,8 +73,8 @@ namespace MonetisV2.Server.Controllers
         public async Task<ActionResult<IEnumerable<Expense>>> GetByCategory(string category)
         {
             return await _context.Expenses
-                .Where(e => e.Category.ToLower() == category.ToLower())
-                .ToListAsync();
+    .Where(e => string.Equals(e.Category, category, StringComparison.OrdinalIgnoreCase))
+    .ToListAsync();
         }
 
         // GET: api/expenses/range?start=2025-03-01&end=2025-03-31
