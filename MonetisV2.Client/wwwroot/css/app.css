@@ -101,3 +101,32 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+/* === Dark Mode Overrides === */
+body.bg-dark {
+    color: #f8f9fa;
+}
+
+.bg-dark .table {
+    color: #f8f9fa;
+}
+
+.bg-dark .form-select,
+.bg-dark .form-label {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+.bg-dark .btn-outline-light {
+    border-color: #f8f9fa;
+    color: #f8f9fa;
+}
+/* Fix dark mode striped table row colors */
+.bg-dark .table-striped > tbody > tr:nth-of-type(odd) {
+    --bs-table-accent-bg: rgba(255, 255, 255, 0.05); /* subtle stripe */
+    color: #f8f9fa;
+}
+
+.bg-dark .table {
+    color: #f8f9fa;
+    border-color: #dee2e6;
+}
