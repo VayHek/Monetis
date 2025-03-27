@@ -8,5 +8,6 @@ namespace MonetisV2.Shared
         public decimal Amount { get; set; }
         public string Category { get; set; } = string.Empty; // Initialize to avoid CS8618 warning
         public DateTime Date { get; set; }
+
     }
 }

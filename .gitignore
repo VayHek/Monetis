@@ -9,3 +9,5 @@ obj/
 __pycache__/
 *.DS_Store
 node_modules/
+MonetisV2.Client/wwwroot/_framework/
+

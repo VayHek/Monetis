@@ -20,7 +20,9 @@
 
         <div class="mb-3">
             <label for="categoryFilter" class="form-label fw-semibold">Filter by Category:</label>
-            <select id="categoryFilter" class="form-select w-auto d-inline-block ms-2" @bind="selectedCategory">
+            <select id="categoryFilter" class="form-select w-auto d-inline-block ms-2"
+                    @bind="_selectedCategory"
+                    @bind:event="onchange">
                 @foreach (var category in categories)
                 {
                     <option value="@category">@category</option>
@@ -63,42 +65,56 @@
 @code {
     private List<Expense> expenses = new();
     private decimal totalSpent;
-    private string selectedCategory = "All";
+    private string _selectedCategory = "All";
     private List<string> categories = new();
 
-    protected override async Task OnInitializedAsync()
+    private string selectedCategory
     {
-        try
+        get => _selectedCategory;
+        set
         {
-            expenses = await Http.GetFromJsonAsync<List<Expense>>("api/expenses") ?? new();
-            totalSpent = await Http.GetFromJsonAsync<decimal>("api/expenses/total");
-
-            categories = expenses.Select(e => e.Category)
-                                 .Distinct()
-                                 .OrderBy(c => c)
-                                 .ToList();
-            categories.Insert(0, "All");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error loading data: " + ex.Message);
+            if (_selectedCategory != value)
+            {
+                _selectedCategory = value;
+                _ = GenerateChartAsync(); // re-render chart
+            }
         }
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
-        {
-            await GenerateChartAsync();
-        }
+        await LoadDataAsync();
+        await GenerateChartAsync();
+    }
+
+    //removed this override as the chart was blank and moved await GenerateChartAsync inside OnInitializedAsync
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //   if (firstRender)
+    //    {
+    //        await GenerateChartAsync();
+    //    }
+    //}
+
+    private async Task LoadDataAsync()
+    {
+        expenses = await Http.GetFromJsonAsync<List<Expense>>("api/expenses") ?? new();
+        totalSpent = await Http.GetFromJsonAsync<decimal>("api/expenses/total");
+
+        categories = expenses.Select(e => e.Category)
+                             .Distinct()
+                             .OrderBy(c => c)
+                             .ToList();
+
+        if (!categories.Contains("All"))
+            categories.Insert(0, "All");
     }
 
     private IEnumerable<Expense> FilteredExpenses()
     {
-        if (selectedCategory == "All")
-            return expenses;
-
-        return expenses.Where(e => e.Category == selectedCategory);
+        return selectedCategory == "All"
+            ? expenses
+            : expenses.Where(e => e.Category == selectedCategory);
     }
 
     private void NavigateToExpenseForm()
@@ -114,19 +130,24 @@
     private async Task DeleteExpense(int id)
     {
         await Http.DeleteAsync($"api/expenses/{id}");
-        expenses = await Http.GetFromJsonAsync<List<Expense>>("api/expenses") ?? new();
-        totalSpent = await Http.GetFromJsonAsync<decimal>("api/expenses/total");
+        await LoadDataAsync();
+        await GenerateChartAsync();
+        StateHasChanged();
     }
 
     private async Task GenerateChartAsync()
     {
-        var grouped = expenses
+        var grouped = FilteredExpenses()
             .GroupBy(e => e.Category)
-            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) });
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
 
         var labels = grouped.Select(g => g.Category).ToArray();
         var data = grouped.Select(g => g.Total).ToArray();
 
         await JS.InvokeVoidAsync("renderCategoryChart", labels, data);
+        Console.WriteLine($"[Chart] Categories: {string.Join(", ", labels)}");
+        Console.WriteLine($"[Chart] Values: {string.Join(", ", data)}");
+
     }
 }

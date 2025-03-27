@@ -11,34 +11,69 @@
     <div id="app">Loading...</div>
 
     <script src="_framework/blazor.webassembly.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        window.renderCategoryChart = (labels, data) => {
-            const ctx = document.getElementById('categoryChart');
-            if (!ctx) return;
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    window.renderCategoryChart = (labels, data) => {
+        console.log("📊 Chart Render Triggered");
+        console.log("Labels:", labels);
+        console.log("Data:", data);
 
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Amount Spent ($)',
-                        data: data,
-                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
+        const canvas = document.getElementById('categoryChart');
+        if (!canvas) {
+            console.warn("❌ Canvas not found");
+            return;
+        }
+
+        if (canvas.chartInstance) {
+            console.log("🧹 Destroying existing chart");
+            canvas.chartInstance.destroy();
+        }
+
+        const ctx = canvas.getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Amount Spent ($)',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#212529'
+                        },
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#212529'
+                        }
+                    }
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#212529'
                         }
                     }
                 }
-            });
-        };
-    </script>
+            }
+        });
+
+        canvas.chartInstance = chart;
+    };
+</script>
+
+
 </body>
 </html>

@@ -1,0 +1,3 @@
+# Ignore warnings in Blazor-generated files
+[**/wwwroot/_framework/*.js]
+generated_code = true

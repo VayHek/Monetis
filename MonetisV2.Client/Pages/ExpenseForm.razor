@@ -46,8 +46,7 @@
     private Expense expense = new();
     private bool IsEdit => Id.HasValue;
     private string? Message;
-    private bool IsSaving = false;
-
+    
     protected override async Task OnInitializedAsync()
     {
         if (IsEdit)
@@ -65,8 +64,6 @@
 
     private async Task HandleValidSubmit()
     {
-        IsSaving = true;
-
         try
         {
             if (IsEdit)
@@ -88,11 +85,6 @@
         catch (Exception ex)
         {
             Message = $"Something went wrong: {ex.Message}";
-        }
-
-        finally
-        {
-            IsSaving = false;
         }
     }
 }
